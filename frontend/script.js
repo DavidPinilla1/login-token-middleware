@@ -8,7 +8,7 @@ const loginForm = `<form class="login p-3" onsubmit ="login(event)">
                         <input class="form-control my-2" type="text" required name="username" placeholder="Introduzca el username">
                         <input class="form-control my-2" type="password" required name="password" placeholder="Introduzca el password">
                     <button type="submit" class="btn btn-primary">Conectarse</button>
-            </form>`
+            </form>`;
 const mainContainer = document.querySelector('main');
 const token = localStorage.getItem('authToken');
 if(token){
@@ -16,6 +16,16 @@ if(token){
         headers:{
             'authorization':token
         }
+    })
+    .then(res=>{
+        const user =res.data;
+        document.querySelector('header').innerHTML=`
+        <span>${user.username}</span>
+        <span>${user.email}</span>
+        <span>${user.role}</span>
+        <span> LOG OUT</span>
+        `
+        mainContainer.innerHTML='Bienvenid@';
     })
 }
 const login = (event) => {
